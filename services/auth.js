@@ -143,7 +143,13 @@ class AuthService {
       throw new Error('No refresh token available');
     }
 
-    const response = await api.post('/auth/refresh', { refresh_token: refreshToken });
+    const user = this.getCurrentUser();
+    const userId = user?.id || user?._id;
+
+    const response = await api.post('/auth/refresh', {
+      refresh_token: refreshToken,
+      ...(userId ? { userId } : {})
+    });
     if (response.data?.success) {
       const { access_token, refresh_token } = response.data;
       authStorage.setToken('access_token', access_token);
@@ -159,9 +165,13 @@ class AuthService {
     const response = await api.post('/auth/login', { email, password });
     if (response.data?.success) {
       const { user, session } = response.data;
+      const normalizedUser = {
+        ...user,
+        id: user?.id || user?._id
+      };
       authStorage.setAuthProvider('backend');
       authStorage.setTokens(session.access_token, session.refresh_token, remember);
-      authStorage.setUserData(user);
+      authStorage.setUserData(normalizedUser);
 
       // Mark user as active (mobile / web) – ignore errors silently
       try {
@@ -170,7 +180,7 @@ class AuthService {
         console.warn('Failed to update user status to active:', statusErr);
       }
 
-      return { success: true, user, token: session.access_token };
+      return { success: true, user: normalizedUser, token: session.access_token };
     }
     throw new Error(response.data?.message || 'Login failed');
   }

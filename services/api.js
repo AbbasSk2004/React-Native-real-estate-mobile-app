@@ -275,9 +275,13 @@ api.interceptors.response.use(
           throw new Error('No refresh token available');
         }
 
+        const storedUser = await authStorage.getUserDataAsync();
+        const userId = storedUser?.id || storedUser?._id;
+
         // Try to refresh the token
         const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
-          refresh_token: refreshToken
+          refresh_token: refreshToken,
+          ...(userId ? { userId } : {})
         });
 
         // Backend returns snake_case keys
