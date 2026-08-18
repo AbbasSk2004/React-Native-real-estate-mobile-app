@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Eskan Real Estate",
+    "slug": "real-estate",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.abbas.realestate",
+      "associatedDomains": [
+        "applinks:eskan-real-estate-backend.onrender.com",
+        "applinks:mmgfvjfgstcpqmlhctlw.supabase.co"
+      ]
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.abbas.realestate",
+      "versionCode": 1,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "eskan-real-estate-backend.onrender.com",
+              "pathPrefix": "/auth"
+            },
+            {
+              "scheme": "https",
+              "host": "mmgfvjfgstcpqmlhctlw.supabase.co",
+              "pathPrefix": "/auth/v1/verify"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "realestate",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8a13c8de-9fc5-44ef-a794-077c8b0b0161"
+      }
+    },
+    "owner": "abbas_skaiki"
+  }
+}
